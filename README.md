@@ -51,7 +51,9 @@ https://user-images.githubusercontent.com/111454351/207156718-a01f3a08-3e01-4d28
 
 
 
-We created a fitness tracking application that allows a user to see the information on their sleep, hydration and step goals. Features added allows users to see all data displayed in a visually pleasing manner using charts from chart.js. The application also allows the user to take advantage of a calendar to manipulte dates to see a wide variety of information from different dates. Users can view their personal information inside of an information section.
+  We created a fitness tracking application that allows a user to see the information on their sleep, hydration and activity. We used a local server and incorporated fetch request to GET and POST data. Error handling was added to both fetch GET and POST requests to catch errors that may occur from either request. Features added allows users to see all data displayed in a visually pleasing manner using charts from chart.js. We utilized dayjs to format and standardize dates. The user can add new data for current day. After the user submits data the charts will update and populate with latest data. We utilized recursion to construct a weeks worth of data if there are gaps in the datas' date. We added a helper function file to house functions that are use mulitiple times throughout the project to keep our code DRY. The application also allows the user to take advantage of a calendar to manipulte dates to see a wide variety of information from different dates. Users can view their personal information inside of an information section. 
+
+
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -67,6 +69,7 @@ We created a fitness tracking application that allows a user to see the informat
 - [![Chai][chai]][chai-url]
 - [![Git][git]][git-url]
 - [![GitHub][github]][github-url]
+- [![dayjs][dayjs]][dayjs-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -91,6 +94,23 @@ We created a fitness tracking application that allows a user to see the informat
    ```sh
    Example: http://localhost:8080/
    ```
+   
+## API Installation
+
+6. Clone the repo
+      ```sh
+   git clone git@github.com:turingschool-examples/fitlit-api.git
+   ```
+7. cd into it from terminal
+8. Install NPM packages
+   ```sh
+   npm install
+   ```
+9. Run npm start
+   ```sh
+   npm start
+   ```
+10. Close using control + c
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -104,6 +124,15 @@ We created a fitness tracking application that allows a user to see the informat
   - [x] Calendar to Choose Week the User wants to see
 
 See the [open issues](https://github.com/nordbyi/FitLit/issues) for a full list of proposed features (and known issues).
+
+## Future Additions
+
+- Add testing to helper function file
+- Adjust the post to find missing data and ignore data that exists
+- Fix FitLit logo
+- Add page load to inform the user that the page is loading
+- Use the sequential order function that was created to check if dates are in sequential order
+- Make site more accessible by utilizing the voiceover to ensure it is more accessible
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -121,6 +150,8 @@ See the [open issues](https://github.com/nordbyi/FitLit/issues) for a full list 
 [chai-url]: https://www.chaijs.com/
 [webpack]: https://img.shields.io/badge/Webpack-563D7C?style=for-the-badge&logo=webpack&logoColor=white
 [webpack-url]: https://webpack.js.org/
+[dayjs]: https://img.shields.io/badge/-dayjs-fb6052?style=for-the-badge
+[dayjs-url]: https://www.npmjs.com/package/dayjs
 [chart.js]: https://img.shields.io/badge/Chart.js-35495E?style=for-the-badge&logo=chartdotjs&logoColor=4FC08D
 [chart.js-url]: https://www.chartjs.org/
 [css]: https://img.shields.io/badge/CSS-000000?style=for-the-badge&logo=css&logoColor=white

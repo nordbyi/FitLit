@@ -33,7 +33,7 @@ const sleepHoursInput = document.querySelector("#todaySleepHours");
 const hydrationInput = document.querySelector("#todayHydration");
 const submitErrorMessage = document.querySelector("#submitError");
 const inputButton = document.querySelector("#inputButton");
-const main = document.querySelector('#main')
+const main = document.querySelector("#main");
 
 calendarBtn.addEventListener("click", function () {
   const time = new Date(calendar.value).getTime();
@@ -108,7 +108,7 @@ fetchAll()
   .catch((error) => {
     main.innerHTML = `
     <h2 class="fetch-error">**${error.message}**</h2>
-    `
+    `;
   });
 
 function updateDataModel(data, user) {
@@ -228,8 +228,8 @@ function pageRender() {
     ["rgb(199, 239, 255)"]
   );
 }
-function submitFormHandler(event) {
-  event.preventDefault();
+
+function checkForValidInputs() {
   if (
     !stepsInput.value ||
     !activityInput.value ||
@@ -238,19 +238,35 @@ function submitFormHandler(event) {
     !sleepQualityInput.value ||
     !hydrationInput.value
   ) {
-    submitErrorMessage.innerHTML = `
-    <div class="submitErrorMessage"> 
-      <p><strong>Please Fill Out All Inputs</strong></p>
-    </div>`;
-    return;
+    return inputErrorHandle("Please Fill Out All Inputs");
   }
   if (!allUserHydro) {
-    submitErrorMessage.innerHTML = `
-    <div class="submitErrorMessage"> 
-      <p><strong>Data failed to load: unable to post new data</strong></p>
-    </div>`;
-    return;
-   }
+    return inputErrorHandle("Data failed to load: unable to post new data");
+  }
+
+  if (
+    +stepsInput.value < 0 ||
+    +activityInput.value < 0 ||
+    +stairsInput.value < 0 ||
+    +sleepHoursInput.value < 0 ||
+    +sleepQualityInput.value < 0 ||
+    +hydrationInput.value < 0
+  ) {
+    return inputErrorHandle("Please input positive numbers");
+  }
+
+  if (+sleepHoursInput.value > 24) {
+    return inputErrorHandle("Please make sleep hour less than 24");
+  }
+
+  if (+sleepQualityInput.value > 10) {
+    return inputErrorHandle("Please make sleep quality less than 10");
+  }
+
+  if (+activityInput.value > 1440) {
+    return inputErrorHandle("Please make activity mins less than 1440");
+  }
+
   if (
     userDataForDate(
       allUserHydro.data,
@@ -268,10 +284,22 @@ function submitFormHandler(event) {
       dayjs().format("YYYY/MM/DD")
     )
   ) {
-    submitErrorMessage.innerHTML = `
-    <div class="submitErrorMessage"> 
-      <p><strong>Data already exists for this day</strong></p>
-    </div>`;
+    return inputErrorHandle("Data already exists for this day");
+  }
+  return true;
+}
+
+function inputErrorHandle(message) {
+  submitErrorMessage.innerHTML = `
+  <div class="submitErrorMessage"> 
+    <p><strong>${message}</strong></p>
+  </div>`;
+  return false;
+}
+
+function submitFormHandler(event) {
+  event.preventDefault();
+  if (!checkForValidInputs()) {
     return;
   }
   postData(
@@ -296,14 +324,13 @@ function submitFormHandler(event) {
     updateDataModel,
     pageRender,
     currentUser,
-    clearInputs,
+    clearInputs
   ).catch((error) => {
     submitErrorMessage.innerHTML = `
       <div class="submitErrorMessage"> 
         <p><strong>${error.message}</strong></p>
       </div>`;
   });
-  
 }
 
 const displayUserName = function (user) {
@@ -375,10 +402,10 @@ function currentDateForUser() {
 }
 
 function clearInputs() {
-  stepsInput.value = ""
-  stairsInput.value = ""
-  activityInput.value = ""
-  sleepQualityInput.value = ""
-  sleepHoursInput.value = ""
-  hydrationInput.value = ""
+  stepsInput.value = "";
+  stairsInput.value = "";
+  activityInput.value = "";
+  sleepQualityInput.value = "";
+  sleepHoursInput.value = "";
+  hydrationInput.value = "";
 }
